@@ -25,8 +25,12 @@ int printf1_printf(const char *format, ...)
 		{
 			int d = va_arg(arguments, int);
 
-			write(1, &d, 4);
-			n++;
+			char buffer[32];
+
+			int len = snprintf(buffer, sizeof(buffer), "%d", d);
+
+			write(1, buffer, len);
+			n += len;
 		}
 		else
 		{
