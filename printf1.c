@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stdio.h>
 /**
  * printf1_printf - produce output according to a format
  * @format: pointer to a character constant
@@ -29,7 +30,6 @@ int printf1_printf(const char *format, ...)
 			}
 			else
 			{
-				putchar('%');
 				putchar(*format);
 				n++;
 			}
