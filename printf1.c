@@ -1,11 +1,11 @@
 #include "main.h"
 /**
- * _printf - produce output according to a format
+ * printf1_printf - produce output according to a format
  * @format: pointer to a character constant
  *
  * Return: int
  */
-int _printf(const char *format, ...)
+int printf1_printf(const char *format, ...)
 {
 	va_list arguments;
 	int n = 0;
