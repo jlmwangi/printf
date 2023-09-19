@@ -31,7 +31,8 @@ int printf1_printf(const char *format, ...)
 			else
 			{
 				putchar(*format);
-				n++;
+				putchar('%');
+				n += 2;
 			}
 			format++;
 		}
