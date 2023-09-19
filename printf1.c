@@ -17,25 +17,52 @@ int printf1_printf(const char *format, ...)
 	}
 	while (*format)
 	{
-		if (*format == '%')
-		{
-			format++;
-		}
-		if (*format == 'd' || *format == 'i')
-		{
-			int d = va_arg(arguments, int);
-
-			char buffer[32];
-
-			int len = snprintf(buffer, sizeof(buffer), "%d", d);
-
-			write(1, buffer, len);
-			n += len;
-		}
-		else
+		if (*format != '%')
 		{
 			write(1, format, 1);
 			n++;
+		}
+		else
+		{
+			format++;
+			if (*format == '\0')
+			{
+				break;
+			}
+			if (*format == '%')
+			{
+				write(1, format, 1);
+				n++;
+			}
+			else if (*format == 'c')
+			{
+				char c = va_arg(arguments, int);
+
+				write(1, &c, 1);
+				n++;
+			}
+			else if (*format == 's')
+			{
+				char *ptr = va_arg(arguments, char*);
+				int _strlen = 0;
+
+				while (ptr[_strlen] != '\0')
+					_strlen++;
+				write(1, ptr, _strlen);
+				n += _strlen;
+			}
+			else if (*format == 'd' || *format == 'i')
+			{
+				int d = va_arg(arguments, int);
+
+				write(1, &d, 4);
+				n += 4;
+			}
+			else
+			{
+				write(1, format, 1);
+				n++;
+			}
 		}
 		format++;
 	}
