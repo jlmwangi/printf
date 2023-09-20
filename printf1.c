@@ -7,65 +7,46 @@
  */
 int printf1_printf(const char *format, ...)
 {
-	va_list arguments;
-	int n = 0;
+	
+		int n = 0;
+		va_list arguments;
 
-	va_start(arguments, format);
-	if (format == NULL)
-	{
-		return (-1);
-	}
-	while (*format)
-	{
-		if (*format != '%')
+		if (format == NULL)
 		{
-			write(1, format, 1);
-			n++;
+			return (-1);
 		}
-		else
+		va_start(arguments, format);
+		while (*format)
 		{
-			format++;
-			if (*format == '\0')
-			{
-				break;
-			}
-			if (*format == '%')
-			{
-				write(1, format, 1);
-				n++;
-			}
-			else if (*format == 'c')
-			{
-				char c = va_arg(arguments, int);
-
-				write(1, &c, 1);
-				n++;
-			}
-			else if (*format == 's')
-			{
-				char *ptr = va_arg(arguments, char*);
-				int _strlen = 0;
-
-				while (ptr[_strlen] != '\0')
-					_strlen++;
-				write(1, ptr, _strlen);
-				n += _strlen;
-			}
-			else if (*format == 'd' || *format == 'i')
-			{
-				int d = va_arg(arguments, int);
-
-				write(1, &d, 4);
-				n += 4;
-			}
+			if (*format != '%')
+				{
+					putchar(*format);
+					n++;
+				}
 			else
 			{
-				write(1, format, 1);
-				n++;
+				format++;
+				if (*format == '\0')
+					break;
+				if (*format == '%')
+				{
+					n += _percent();
+				}
+				else if (*format == 'c')
+				{
+					n += _char(arguments);
+				}
+				else if (*format == 's')
+				{
+					n += _string(arguments);
+				}
+				else if (*format == 'd' || *format == 'i')
+				{
+					n += print_num(arguments);
+				}
 			}
+			format++;
 		}
-		format++;
-	}
-	va_end(arguments);
-	return (n);
+		va_end(arguments);
+		return (n);
 }
